@@ -13,6 +13,7 @@ rl.on('line', function(line) {
     if (line === "right") rl.close();
 	if(emailreq==true)
 	{
+		//****************** apicall to retrieve employee details from emailid************//
 		emailreq=false;
 		var post_data = '{"employeeSearch" : "'+line+'"}';
 		apicall.PostCode("http://localhost:8080/hcm/employee/employeeinfo",post_data,function(obj){
@@ -20,6 +21,9 @@ rl.on('line', function(line) {
 			console.log(obj);
 			
 			//call other apis
+	// Todo : api calls to get leave balance and last leaves
+
+	// Todo : api calls to apply leave
 			
 			
 		});
@@ -39,11 +43,6 @@ request.on('response', function(response) {
 	console.log('ramsaybot> Could you please enter your email id? \r\n');
 	emailreq=true;
 	
-	// Todo : ask for email id and send api call to retrieve employee details
-	
-	// Todo : api calls to get leave balance and last leaves
-
-	// Todo : api calls to apply leave
 	
 	}
 });
