@@ -11,14 +11,14 @@ function callback(body,callb)
   return body;
 }
 
-function PostCode(url,post_data,callb) {
+function PostCode(host,port,path,method,post_data,callb) {
   // An object of options to indicate where to post to
   var tempvar;
   var post_options = {
-      host: 'localhost',
-      port: '8080',
-      path: '/hcm/employee/employeeinfo',
-      method: 'POST',
+      host: host,
+      port: port,
+      path: path,
+      method: method,
       headers: {
           'Content-Type': 'application/json',
 		  'encoding': null,
@@ -26,6 +26,7 @@ function PostCode(url,post_data,callb) {
       }
   };
   
+  var url="http://"+host+":"+port+path;
   // Set up the request
   var post_req = request(url,post_options, function(err, res, body){
     if(res.headers['content-encoding'] == 'gzip')
