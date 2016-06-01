@@ -1,5 +1,5 @@
 var apiai = require('apiai');
-var app = apiai('c49ef0a619cf4e27ad5c1548ad25de1d');
+var app = apiai('269bcb999daa44e2b0cf806bcf2a591f');
 
 var apicall = require('./apicall1.js');
 var readline = require('readline');
@@ -16,17 +16,23 @@ rl.on('line', function(line) {
 		//****************** apicall to retrieve employee details from emailid************//
 		emailreq=false;
 		var post_data = '{"employeeSearch" : "'+line+'"}';
-		apicall.PostCode("http://localhost:8080/hcm/employee/employeeinfo",post_data,function(obj){
-			console.log("The object was :");
-			console.log(obj);
+		//PostCode(host,port,path,method,post_data,callb) 
+		apicall.PostCode("localhost","8080","/hcm/employee/employeeinfo","POST",post_data,function(obj){
+			//console.log("The object was :");
+		obj=JSON.stringify(obj);
+		obj=JSON.parse(obj); 
+		console.log(obj.employeeId);
+		
+		post_data = '{"employeeId" : "'+obj.employeeId+'"}';
+		apicall.PostCode("localhost","8080","/hcm/leave/leavebalance","POST",post_data,function(obj1){
 			
-			//call other apis
-	// Todo : api calls to get leave balance and last leaves
+	console.log(obj1);
 
 	// Todo : api calls to apply leave
 			
 			
 		});
+	});
 	}
 	//console.log(line + ' hello');
 	
@@ -41,6 +47,7 @@ request.on('response', function(response) {
 	if (response.result.fulfillment.speech === "Ok..let me check your leave status !!") {
 	//rl.close();
 	console.log('ramsaybot> Could you please enter your email id? \r\n');
+	//console.log(response);
 	emailreq=true;
 	
 	
